@@ -4,11 +4,13 @@ const lastNameInput = document.getElementById('lastName');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const confirmPasswordInput = document.getElementById('confirmPassword');
-const successMessage = document.getElementById('successMessage');
+const darkModeToggle = document.getElementById('darkModeToggle');
+let isDarkMode = false;
 
 form.addEventListener('submit', function (event) {
   event.preventDefault();
   validateForm();
+  showConfirmation();
 });
 
 firstNameInput.addEventListener('input', function () {
@@ -31,9 +33,6 @@ confirmPasswordInput.addEventListener('input', function () {
   validateConfirmPassword();
 });
 
-const darkModeToggle = document.getElementById('darkModeToggle');
-let isDarkMode = false;
-
 darkModeToggle.addEventListener('click', function () {
   toggleDarkMode();
 });
@@ -44,16 +43,12 @@ function validateForm() {
   validateEmail();
   validatePassword();
   validateConfirmPassword();
-
-  if (form.checkValidity()) {
-    submitForm();
-  }
 }
 
 function validateFirstName() {
   const value = firstNameInput.value.trim();
   if (value.length < 5) {
-    setInvalid(firstNameInput, 'O primeiro nome deve ter no mínimo 5 caracteres.');
+    setInvalid(firstNameInput);
   } else {
     setValid(firstNameInput);
   }
@@ -62,7 +57,7 @@ function validateFirstName() {
 function validateLastName() {
   const value = lastNameInput.value.trim();
   if (value.length < 5) {
-    setInvalid(lastNameInput, 'O segundo nome deve ter no mínimo 5 caracteres.');
+    setInvalid(lastNameInput);
   } else {
     setValid(lastNameInput);
   }
@@ -70,8 +65,9 @@ function validateLastName() {
 
 function validateEmail() {
   const value = emailInput.value.trim();
-  if (value.length < 5 || !value.includes('@')) {
-    setInvalid(emailInput, 'Por favor, insira um email válido.');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(value)) {
+    setInvalid(emailInput);
   } else {
     setValid(emailInput);
   }
@@ -80,7 +76,7 @@ function validateEmail() {
 function validatePassword() {
   const value = passwordInput.value;
   if (value.length < 6 || value.length > 8) {
-    setInvalid(passwordInput, 'A senha deve ter entre 6 e 8 caracteres.');
+    setInvalid(passwordInput);
   } else {
     setValid(passwordInput);
   }
@@ -90,22 +86,27 @@ function validateConfirmPassword() {
   const passwordValue = passwordInput.value;
   const confirmPasswordValue = confirmPasswordInput.value;
   if (passwordValue !== confirmPasswordValue) {
-    setInvalid(confirmPasswordInput, 'A confirmação de senha não coincide com a senha digitada.');
+    setInvalid(confirmPasswordInput);
   } else {
     setValid(confirmPasswordInput);
   }
 }
 
-function setInvalid(input, message) {
+function setInvalid(input) {
   input.classList.add('invalid');
   input.classList.remove('valid');
-  input.setCustomValidity(message);
 }
 
 function setValid(input) {
   input.classList.add('valid');
   input.classList.remove('invalid');
-  input.setCustomValidity('');
+}
+
+function showConfirmation() {
+  const confirmationMessage = document.createElement('p');
+  confirmationMessage.textContent = 'Formulário enviado com sucesso!';
+  confirmationMessage.classList.add('confirmation-message');
+  form.appendChild(confirmationMessage);
 }
 
 function toggleDarkMode() {
@@ -117,21 +118,10 @@ function toggleDarkMode() {
   if (isDarkMode) {
     body.classList.add('dark-mode');
     formContainer.classList.add('dark-mode');
-    darkModeToggle.textContent = 'Desativar Dark Mode';
+    darkModeToggle.textContent = 'Ativar Light Mode';
   } else {
     body.classList.remove('dark-mode');
     formContainer.classList.remove('dark-mode');
     darkModeToggle.textContent = 'Ativar Dark Mode';
   }
-}
-
-function submitForm() {
-  // Simulação de envio do formulário
-  setTimeout(function () {
-    form.reset();
-    successMessage.style.display = 'block';
-    setTimeout(function () {
-      successMessage.style.display = 'none';
-    }, 3000);
-  }, 1000);
 }

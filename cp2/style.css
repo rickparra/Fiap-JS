@@ -45,17 +45,28 @@ body {
   .dark-mode {
   background-color: #333;
   color: #fff;
-  }
-  
-  .dark-mode .form-container {
+}
+
+.dark-mode .form-container {
   background-color: #555;
   color: #fff;
-  }
+}
+
+input.valid {
+  color: green;
+}
+
+input.invalid {
+  color: red;
+}
+
   
   #successMessage {
-  text-align: center;
-  font-size: larger;
-  display: none;
-  color: green;
-  margin-top: 10px;
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #d4edda;
+    color: #155724;
+    border-radius: 4px;
   }
+  
