@@ -4,17 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cp-1</title>
-
-    <script src="./script.js"></script>
+    <script src="./script.js" defer></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>abra o console</h1>
+    <header>
+        <h1>CHECKPOINT</h1>
+    </header>
     
-    <ul>
-        <li>Crie um array contendo 10 valores de salário e, utilizando o método map(), atribua um aumento de 15% para salários até 2000 e um aumento de 10% para salários acima de 2000.</li>
-        <li>Utilizando o array de resultados do exercício anterior, crie um novo array usando o método filter(), contendo somente os salários superiores a 2500.</li>
-        <li>Utilizando o array de resultados do exercício anterior, usando o método reduce(), some os valores.</li>
-    </ul>
+    <section id="exercicio-1">
+        <h2>Exercício 1</h2>
+        <h2>A resolução do exercicio está no console.</h2>
+        <ul>
+            <li>Crie um array contendo 10 valores de salário e, utilizando o método map(), atribua um aumento de 15% para salários até 2000 e um aumento de 10% para salários acima de 2000.</li>
+            <li>Utilizando o array de resultados do exercício anterior, crie um novo array usando o método filter(), contendo somente os salários superiores a 2500.</li>
+            <li>Utilizando o array de resultados do exercício anterior, usando o método reduce(), some os valores.</li>
+        </ul>
+    </section>
+
+    <section id="exercicio-2">
+        <h1>Lista de Tarefas</h1>
+
+        <div>
+            <label>
+                <input type="checkbox" id="paid-task">
+                Tarefa paga
+            </label>
+
+            <label>
+                <input type="checkbox" id="timed-task">
+                Tarefa com duração
+            </label>
+        </div>
+
+        <div>
+            <label>Descrição: <input type="text" id="task-description"></label>
+            <label>Autor: <input type="text" id="task-author"></label>
+            <label>Departamento: <input type="text" id="task-department"></label>
+            <label>Importância: <input type="number" id="task-importance"></label>
+        </div>
+
+        <button id="add-task-button">Adicionar Tarefa</button>
+        <button id="order-tasks-button">Ordenar por Importância</button>
+
+        <table id="task-table">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Autor</th>
+                    <th>Departamento</th>
+                    <th>Importância</th>
+                    <th>Valor</th>
+                    <th>Duração</th>
+                    <th>Excluir</th>
+                </tr>
+            </thead>
+            <h2>Tarefas</h2>
+            <tbody tarefas>
+                <!-- Linhas de tarefas serão adicionadas aqui -->
+            </tbody>
+        </table>
+
+    </section>
 </body>
 </html>
