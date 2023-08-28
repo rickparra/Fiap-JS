@@ -39,33 +39,30 @@
 //
 
 // Selecionar elementos
-const descriptionInput = document.getElementById('task-description'); 
+const descriptionInput = document.getElementById('task-description');
 const authorInput = document.getElementById('task-author');
 const departmentInput = document.getElementById('task-department');
 const importanceInput = document.getElementById('task-importance');
-
 const paidTaskCheck = document.getElementById('paid-task');
 const timedTaskCheck = document.getElementById('timed-task');
+const addButton = document.getElementById('add-task-button');
+const orderTasksButton = document.getElementById('order-tasks-button');
+const importanceList = document.getElementById('importance-list');
+const taskTableBody = document.querySelector('#exercicio-2 tbody[tarefas]');
+
+// Eventos
+addButton.addEventListener('click', addTask);
+orderTasksButton.addEventListener('click', orderTasksByImportance);
 
 // Função para adicionar tarefa
 function addTask() {
-
-  // Obter valores
   const description = descriptionInput.value;
   const author = authorInput.value;
   const department = departmentInput.value;
-  let importance = importanceInput.value;  
-
-  // Validar importance 
-  if(!importance) {
-    importance = null;
-  }
-
-  // Verificar checks
+  const importance = importanceInput.value || null;
   const isPaid = paidTaskCheck.checked;
   const hasDuration = timedTaskCheck.checked;
 
-  // Criar objeto da tarefa
   const task = {
     description,
     author,
@@ -75,26 +72,17 @@ function addTask() {
     hasDuration
   };
 
-  // Criar linha da tabela
   const row = createTaskRow(task);
-
-  // Adicionar linha à tabela
-  document.querySelector('#task-table tbody').insertAdjacentHTML('beforeend', row);
-
-  console.log(task);
+  taskTableBody.insertAdjacentHTML('beforeend', row);
 }
 
-// Evento do botão
-const addButton = document.getElementById('add-task-button');
-addButton.addEventListener('click', addTask);
-
-// Função para criar linha da tabela 
+// Função para criar linha da tabela
 function createTaskRow(task) {
   const id = `task-${task.id}`; // fazer lógica de id único
 
   return `
     <tr id="${id}">
-      <td>${task.description}</td>  
+      <td>${task.description}</td>
       <td>${task.author}</td>
       <td>${task.department}</td>
       <td>${task.importance}</td>
@@ -105,6 +93,7 @@ function createTaskRow(task) {
   `;
 }
 
+// Função para deletar tarefa
 function deleteTask(taskId) {
   const taskRow = document.getElementById(taskId);
   if (taskRow) {
@@ -112,3 +101,23 @@ function deleteTask(taskId) {
   }
 }
 
+// Função para ordenar tarefas por importância
+function orderTasksByImportance() {
+  const taskRows = Array.from(taskTableBody.querySelectorAll('tr'));
+  const sortedTasks = taskRows
+    .map(row => {
+      return {
+        description: row.querySelector('td:first-child').textContent,
+        importance: parseInt(row.querySelector('td:nth-child(4)').textContent) || 0
+      };
+    })
+    .sort((taskA, taskB) => taskB.importance - taskA.importance);
+
+  importanceList.innerHTML = '';
+
+  sortedTasks.forEach(task => {
+    const listItem = document.createElement('li');
+    listItem.textContent = task.description;
+    importanceList.appendChild(listItem);
+  });
+}
